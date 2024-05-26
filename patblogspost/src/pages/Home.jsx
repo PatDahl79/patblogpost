@@ -1,12 +1,15 @@
 import React from 'react'
-import Layout from '../Components/Layout'
+import HeroSection from '../Components/HeroSection'
+import AllBlogs from './AllBlogs'
 
 const Home = () => {
   return (
-    <Layout>
-        Home
-    </Layout>
+    <>
+        <HeroSection/>
+        <AllBlogs/>
+    </>
   )
+        
 }
 
 export default Home

@@ -5,7 +5,8 @@ import MyContext from "../context/myContext";
 import lightLogo from '../assets/Logo-dark.png';
 import darkLogo from '../assets/Logo-light.png';
 import Image from '../assets/Women_light_icon.png';
-import { AiOutlineShareAlt, AiOutlineSearch } from 'react-icons/ai';
+import SearchDialog from "./SearchDialog";
+import ShareDialogBox from "./ShareDialogBox";
 
 export default function Nav() {
     const [openNav, setOpenNav] = useState(false);
@@ -22,51 +23,28 @@ export default function Nav() {
     // All NavList 
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-                style={{ color: mode === 'dark' ? 'white' : 'white' }}
-            >
-                <Link to={'/'} className="flex items-center">
+            <li className="p-1 font-normal">
+                <Link to={'/'} className="flex items-center" style={{ color: 'white' }}>
                     Home
                 </Link>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-                style={{ color: mode === 'dark' ? 'white' : 'white' }}
-            >
-                <Link to={'/allblogs'} className="flex items-center">
-                   All Blogs
+            </li>
+            <li className="p-1 font-normal">
+                <Link to={'/allblogs'} className="flex items-center" style={{ color: 'white' }}>
+                    Blogs
                 </Link>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-                style={{ color: mode === 'dark' ? 'white' : 'white' }}
-            >
-                <Link to={'/login'} className="flex items-center">
+            </li>
+            <li className="p-1 font-normal">
+                <Link to={'/login'} className="flex items-center" style={{ color: 'white' }}>
                     Login
                 </Link>
-            </Typography>
-            <Typography
-                as="li"
-                variant="small"
-                color="blue-gray"
-                className="p-1 font-normal"
-                style={{ color: mode === 'dark' ? 'white' : 'white' }}
-            >
-                <Link to={'/signup'} className="flex items-center">
-                    Sign up
+            </li>
+            <li className="p-1 font-normal">
+                <Link to={'/singup'} className="flex items-center" style={{ color: 'white' }}>
+                    Sing up
                 </Link>
-            </Typography>
+            </li>
         </ul>
+        
     );
 
     return (
@@ -75,29 +53,39 @@ export default function Nav() {
                 className="sticky inset-0 z-20 h-max max-w-full border-none rounded-none py-2 px-4 lg:px-8 lg:py-2"
                 style={{ background: mode === 'dark' ? 'rgb(30, 41, 59)' : '#30336b' }}>
 
-                <div className="flex items-center justify-between gap-10">
-                    <div className="flex items-center">
-                        <Link to="/" className="flex items-center gap-2">
-                            <img src={mode === "light" ? darkLogo : lightLogo} className="w-10" />
-                            <Typography
-                                as="span"
-                                className="text-xl font-bold"
-                                style={{ color: mode === 'dark' ? 'white' : 'white' }}
-                            >
-                                Bloggi
-                            </Typography>
-                        </Link>
-                    </div>
+                {/* Desktop View  */}
+                <div className="flex items-center justify-between text-blue-gray-900">
+                    <Link to="/" >
+                        <Typography as="span" className="text-m font-bold" style={{ color: mode === 'dark' ? 'white' : 'white' }}>
+                            <img src={mode === "light" ? darkLogo : lightLogo}  className=' w-20 h-20 ' />
+                        </Typography>
+                    </Link>
 
-                    <div className="hidden lg:flex items-center justify-between w-full">
-                        <div>{navList}</div>
+                    <div className="flex items-center gap-4">
+                        {/*Navlis */}
+                        <div className="hidden lg:flex items-center justify-between w-full"> {navList}</div>
 
-                        <div className="flex items-center gap-4">
-                            <AiOutlineSearch size={20} color="white" />
-                            <AiOutlineShareAlt size={20} color="white" />
-                            <Link to="/dashboard" className="flex items-center">
-                                <img src={Image} className="w-10" />
+                        {/* Search Icon */}
+                        <div>
+                            {/* <AiOutlineSearch size={20} color="white" /> */}
+                            <SearchDialog/>
+                        </div>
+                        
+                        {/* Share Icon */}
+                        <div className="hidden lg:block">
+                            {/* <AiOutlineShareAlt size={20} color="white" /> */}
+                            <ShareDialogBox/>
+                        </div>
+                        
+                        {/* User Icon */}
+                        <div>
+                            <Link to="/dashboard">
+                                <img src={Image} className="w-20" />
                             </Link>
+                        </div>
+
+                        {/* dark and light mode */}
+                        <div>
                             <IconButton onClick={handleThemeChange} className="rounded-full" style={{ background: mode === 'light' ? '#ced6e0' : '#57606f', color: mode === 'dark' ? 'white' : 'black' }}>
                                 {mode === 'light' ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 text-black">
@@ -110,22 +98,22 @@ export default function Nav() {
                                 )}
                             </IconButton>
                         </div>
-                    </div>
-
-                    <div className="flex lg:hidden items-center">
-                        <IconButton className="h-10 w-10 text-inherit rounded-lg" ripple={false} onClick={() => setOpenNav(!openNav)}
-                            style={{ background: mode === 'light' ? '#ced6e0' : '#57606f', color: mode === 'dark' ? 'white' : 'black' }}
-                        >
-                            {openNav ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" className="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                                </svg>
-                            )}
-                        </IconButton>
+                        {/* d */}
+                        <div className="flex lg:hidden items-center">
+                            <IconButton className="h-10 w-10 text-inherit rounded-lg" ripple={false} onClick={() => setOpenNav(!openNav)}
+                                style={{ background: mode === 'light' ? '#ced6e0' : '#57606f', color: mode === 'dark' ? 'white' : 'black' }}
+                            >
+                                {openNav ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" className="h-6 w-6" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                )}
+                            </IconButton>
+                        </div>
                     </div>
                 </div>
 
